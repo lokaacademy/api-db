@@ -14,9 +14,9 @@ const getAllArticles = (req, res) => {
 }
 
 const createArticle = (req, res) => {
-
+    let responseData = {}
     if(Object.keys(req.body).length === 0){
-        const responseData = response(400, 'content tidak boleh kosong !', [])
+        responseData = response(400, 'content tidak boleh kosong !', [])
         res.status(400).send(responseData)
         return
     }
@@ -32,11 +32,10 @@ const createArticle = (req, res) => {
 
     articles.create(article, (error, data) => {
         if(error){
-            res.status(500).send({
-                message: error.message || 'terjadi error saat membuat artikel' 
-            })
+            responseData = response(500, 'error saat menambah artikel', [])
+            res.status(500).send(responseData)
         } else {
-            const responseData = response(200, 'create new article', data)
+            responseData = response(200, 'create new article', data)
             res.send(responseData)
         }
         
