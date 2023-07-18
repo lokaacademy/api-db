@@ -4,7 +4,7 @@
   Get article by id : /article/:id
 */
 
-const { getAllArticles, createArticle, findOne, deleteArticle } = require("../controller/articles.controller")
+const { getAllArticles, createArticle, findOne, deleteArticle, updateArticle } = require("../controller/articles.controller")
 
 
 const articlesRoute = app => {
@@ -12,5 +12,6 @@ const articlesRoute = app => {
     app.get('/article/:id', findOne)
     app.post('/article', createArticle)
     app.delete('/article/:id', deleteArticle)
+    app.put('/article/:id', updateArticle)
 }
 module.exports = articlesRoute

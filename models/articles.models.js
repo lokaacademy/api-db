@@ -70,4 +70,25 @@ articles.delete = (id, result) => {
     })
 }
 
+articles.update = (id, article, result) => {
+    mysqlConnection.query('UPDATE articles SET judul = ?, penulis = ?, published = ?  WHERE id = ?',
+    [article.judul, article.penulis, article.published, id] 
+    ,(err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+          }
+      
+          if (res.affectedRows == 0) {
+            // not found Tutorial with the id
+            result({ kind: "not_found" }, null);
+            return;
+          }
+      
+          console.log("updated tutorial: ", { id: id, ...article })
+          result(null, { id: id, ...article })
+    })
+}
+
 module.exports = articles

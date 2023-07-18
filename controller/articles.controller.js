@@ -84,4 +84,29 @@ const deleteArticle = (req, res) => {
     })
 }
 
-module.exports = {getAllArticles, createArticle, findOne, deleteArticle}
+//update article
+const updateArticle = (req, res) => {
+    const article = {
+        judul: req.body.judul,
+        penulis: req.body.penulis,
+        published: req.body.published
+    }
+    articles.update(req.params.id, article, (err, data) => {
+        if(err){
+            if(err.kind === 'not_found'){
+                res.status(404).send({
+                    message: `Not found Tutorial with id ${req.params.id}`
+                })
+            } else {
+                res.status(500).send({
+                    message: `Not found Tutorial with id ${req.params.id}`
+                })
+            }
+        } else {
+            responseData = response(200, `update article ${req.params.id} success`, data)
+            res.send(responseData)
+        }
+    })
+}
+
+module.exports = {getAllArticles, createArticle, findOne, deleteArticle, updateArticle}
