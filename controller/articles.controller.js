@@ -1,9 +1,12 @@
 const articles = require('../models/articles.models.js')
 const response = require('../response/json_result.js')
 
+let responseData = {}
+
+// get all articles
 const getAllArticles = (req, res) => {
     articles.getAllArticles((error, data) => {
-        const responseData = response(res.statusCode, 'list data', data)
+        responseData = response(res.statusCode, 'list data', data)
         if(error)
             res.status(500).send({
                 message: error.message || "terjadi error"
@@ -13,6 +16,7 @@ const getAllArticles = (req, res) => {
     })
 }
 
+// find article by id
 const findOne = (req, res) => {
     articles.findById(req.params.id, (err, data) => {
         if(err){
@@ -31,8 +35,8 @@ const findOne = (req, res) => {
     })
 }
 
+// create new article
 const createArticle = (req, res) => {
-    let responseData = {}
     if(Object.keys(req.body).length === 0){
         responseData = response(400, 'content tidak boleh kosong !', [])
         res.status(400).send(responseData)
@@ -59,5 +63,25 @@ const createArticle = (req, res) => {
         
     })
 }
-  
-module.exports = {getAllArticles, createArticle, findOne}
+
+//delete article
+const deleteArticle = (req, res) => {
+    articles.delete(req.params.id, (err, data) => {
+        if(err){
+            if(err.kind === 'not_found'){
+                res.status(404).send({
+                    message: `Not found Tutorial with id ${req.params.id}`
+                })
+            } else {
+                res.status(500).send({
+                    message: `Not found Tutorial with id ${req.params.id}`
+                })
+            }
+        } else {
+            responseData = response(200, `delete article ${req.params.id} success`, {})
+            res.send(responseData)
+        }
+    })
+}
+
+module.exports = {getAllArticles, createArticle, findOne, deleteArticle}
