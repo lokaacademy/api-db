@@ -9,7 +9,7 @@ app.use(body_parser.json())
 app.use(body_parser.urlencoded({ extended: true }))
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:3000"
 };
 
 app.use(cors(corsOptions));
