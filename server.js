@@ -4,6 +4,9 @@ const body_parser = require('body-parser')
 
 const cors = require("cors")
 
+/* deklarasi variable app menggunakan express 
+  sebagai server */
+
 const app = express()
 app.use(body_parser.json())
 app.use(body_parser.urlencoded({ extended: true }))
@@ -14,11 +17,12 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-// simple route
+/* app server route */
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to API." });
 });
 
+/* import articles route */
 const routes = require('./routes/articles.route.js')(app)
 
 // set port, listen for requests
