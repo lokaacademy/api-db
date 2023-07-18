@@ -39,4 +39,16 @@ articles.create = (newArticle, result) => {
     })
 }
 
+articles.findById = (id, result) => {
+    mysqlConnection.query(`SELECT * FROM articles WHERE id= ${id}`, (err, res) => {
+        if(err){
+            console.log('error', err)
+            result(err, null)
+            return
+        }
+        console.log('model find', res)
+        result(null, res)
+    })
+}
+
 module.exports = articles
