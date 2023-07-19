@@ -10,13 +10,19 @@ const generateToken = (payload) => {
 }
 
 const verifyToken = (req, res, next) => {
-    const token = req.cookies.SESSION_ID
+    const token = req.cookies.SESSION_ID /* menggunakan cookies */
+
+    /* const bearerHeaders = req.headers['authorization] menggunakan headers */
     
-    if(!token){
+    if(!token)
+    {
         responseData = response(401, 'No token provide', [])
         res.send(responseData)
         return
     }
+
+    // verify jwt token
+
     jwt.verify(token, secretKey, (err, decoded) => {
         if (err) {
             responseData = response(401, 'No token provide', [])
@@ -24,7 +30,9 @@ const verifyToken = (req, res, next) => {
             return 
           }
       
-          req.userId = decoded.userId;
+          req[id] = decoded.id /* cara mengambil payload pada token */
+          req[id].email = decoded.email
+          console.log(req.email)
           next();
     })
 }

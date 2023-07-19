@@ -49,7 +49,8 @@ users.login = (email, password, result) => {
             }
             if (bRes) {
                 const payload = {
-                    id: res[0].id
+                    id: res[0].id,
+                    email: res[0].email
                 }
                 const token = generateToken(payload)
                 mysqlConnection.query(`UPDATE users SET last_login = now() WHERE id = '${res[0].id}' `)

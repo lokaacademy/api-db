@@ -7,12 +7,13 @@ let responseData = {}
 let userData = {}
 loginUser = (req, res) => {
     users.login(req.body.email, req.body.password, (error, data) => {
-        if(error)
-            res.status(500).send({
-                message: error.message || "terjadi error"
-            })
-            
-        else 
+
+        if (error) {
+            responseData = response(500, 'terjadi error', [])
+            res.send(responseData)
+        }
+        else {
+
             if (data.status === 401) {
                 responseData = response(401, 'password salah !', [])
                 res.send(responseData)
@@ -22,6 +23,8 @@ loginUser = (req, res) => {
                 res.cookie('SESSION_ID', data.token, { httpOnly: true });
                 res.send(responseData)
             }
+        }
+            
 
             
     })
@@ -48,10 +51,9 @@ registerUser = (req, res) => {
             password: await encryptPassword()
         }
         
-        
         if(Object.keys(req.body).length === 0){
             responseData = response(400, 'content tidak boleh kosong !', [])
-            res.status(400).send(responseData)
+            res.send(responseData)
             return
         }
 
@@ -71,8 +73,15 @@ registerUser = (req, res) => {
 
 userLogout = (req, res) => {
     const authHeader = req.cookies
-    if (!authHeader) return res.sendStatus(204);
+    if (!authHeader) {
+        responseData = response(204, 'you are logged out !', [])
+        res.send(responseData)
+        return 
+    }
+
+    // baca token pada cookies
     const authToken = authHeader.SESSION_ID
+
     res.clearCookie("SESSION_ID")
     res.setHeader('Clear-Site-Data', '"cookies", "storage"')
     responseData = response(200, 'You are logged out!', [])
