@@ -5,10 +5,11 @@
 */
 
 const { getAllArticles, createArticle, findOne, deleteArticle, updateArticle } = require("../controller/articles.controller")
+const { verifyToken } = require("../middleware/auth")
 
 
 const articlesRoutes = (app) => {
-    app.get('/articles', getAllArticles)
+    app.get('/articles', verifyToken, getAllArticles)
     app.get('/article/:id', findOne)
     app.post('/article', createArticle)
     app.delete('/article/:id', deleteArticle)

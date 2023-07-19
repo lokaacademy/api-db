@@ -1,5 +1,8 @@
 const jwt = require('jsonwebtoken')
 const { secretKey } = require('./config')
+const response = require('../response/json_result.js')
+
+let responseData = {}
 
 const generateToken = (payload) => {
     const token = jwt.sign(payload, secretKey, { expiresIn: '1h' })
@@ -7,14 +10,18 @@ const generateToken = (payload) => {
 }
 
 const verifyToken = (req, res, next) => {
-    const token = req.cookies.token
-
+    const token = req.cookies.SESSION_ID
+    
     if(!token){
-        res.status(401).json({ message: 'no token provide' })
+        responseData = response(401, 'No token provide', [])
+        res.send(responseData)
+        return
     }
     jwt.verify(token, secretKey, (err, decoded) => {
         if (err) {
-            return res.status(401).json({ message: 'Invalid token' });
+            responseData = response(401, 'No token provide', [])
+            res.send(responseData)
+            return 
           }
       
           req.userId = decoded.userId;

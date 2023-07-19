@@ -19,6 +19,7 @@ loginUser = (req, res) => {
             } else {
                 userData = data.user
                 responseData = response(200, data.msg, {token: data.token, user: { email: userData.email, name: userData.name }})
+                res.cookie('SESSION_ID', data.token, { httpOnly: true });
                 res.send(responseData)
             }
 
@@ -66,16 +67,17 @@ registerUser = (req, res) => {
 
     })()
 
-    
-
-    
-    
-
-    
-
-    
-
-
 }
 
-module.exports = {loginUser, registerUser}
+userLogout = (req, res) => {
+    const authHeader = req.cookies
+    if (!authHeader) return res.sendStatus(204);
+    const authToken = authHeader.SESSION_ID
+    res.clearCookie("SESSION_ID")
+    res.setHeader('Clear-Site-Data', '"cookies", "storage"')
+    responseData = response(200, 'You are logged out!', [])
+    res.send(responseData)
+    res.end()
+}
+
+module.exports = {loginUser, registerUser, userLogout}

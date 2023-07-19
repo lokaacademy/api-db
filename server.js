@@ -1,6 +1,8 @@
 require('dotenv').config()
 const express = require("express")
 const body_parser = require('body-parser')
+const cookies = require('cookie-parser')
+
 
 const cors = require("cors")
 
@@ -8,6 +10,7 @@ const cors = require("cors")
   sebagai server */
 
 const app = express()
+app.use(cookies())
 app.use(body_parser.json())
 app.use(body_parser.urlencoded({ extended: true }))
 
@@ -30,3 +33,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
+
+module.exports = app
