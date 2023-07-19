@@ -23,7 +23,7 @@ describe('articles', () => {
 })
 
 /* test post article */
-describe('article', () => {
+describe('articles', () => {
     describe('post articles', () => {
         it('should post new article', () => {
             const article = {
