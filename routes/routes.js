@@ -1,10 +1,15 @@
-const articlesRoute = './articles.route.js'
-const appRouter = (app) => {
+const articlesRoutes = require('./articles.route.js')
+const usersRoutes = require('./users.route.js')
+    
+const appRouter = app => {
+
     app.get('/', (req, res) => {
         res.send('welcome to the development api-server');
       });
-
-    articlesRoute(app)
+    
+    articlesRoutes(app)
+    usersRoutes(app)
+    
 }
 
 

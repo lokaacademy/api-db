@@ -23,13 +23,10 @@ app.get("/", (req, res) => {
 });
 
 /* import articles route */
-const articlesRoutes = require('./routes/articles.route.js')(app)
-const usersRoutes = require('./routes/users.route.js')(app)
+const appRouter = require('./routes/routes.js')(app)
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
-
-module.exports = articlesRoutes, usersRoutes

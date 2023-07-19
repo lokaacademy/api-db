@@ -1,5 +1,5 @@
 const {loginUser, registerUser} = require('../controller/user.controller.js')
-usersRoutes = app => {
+usersRoutes = (app) => {
   app.post('/users/login', loginUser)
   app.post('/users/register', registerUser)
 }

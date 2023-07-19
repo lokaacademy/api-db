@@ -7,7 +7,7 @@
 const { getAllArticles, createArticle, findOne, deleteArticle, updateArticle } = require("../controller/articles.controller")
 
 
-const articlesRoutes = app => {
+const articlesRoutes = (app) => {
     app.get('/articles', getAllArticles)
     app.get('/article/:id', findOne)
     app.post('/article', createArticle)

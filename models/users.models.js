@@ -4,6 +4,7 @@ const { check } = require("express-validator")
 const mysqlConnection = require("./db.mysql")
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { generateToken } = require('../middleware/auth')
 
 /* constructor */
 const users = function (user) {
@@ -11,8 +12,6 @@ const users = function (user) {
     this.password = user.password,
     this.name = user.name
 }
-
-const privateKey = process.env.PRIVATE_KEY || 'lokaacademy'
 
 users.signUp = (newUser, result) => {
     mysqlConnection.query('INSERT INTO users SET ?', newUser, (err, res) => {
@@ -49,7 +48,10 @@ users.login = (email, password, result) => {
                 return
             }
             if (bRes) {
-                const token = jwt.sign({id: res[0].id}, privateKey, { expiresIn: '1h' })
+                const payload = {
+                    id: res[0].id
+                }
+                const token = generateToken(payload)
                 mysqlConnection.query(`UPDATE users SET last_login = now() WHERE id = '${res[0].id}' `)
                 result(null, {msg: 'logged in', token: token, user: res[0]})
                 return
