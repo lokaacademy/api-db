@@ -9,10 +9,11 @@ const { verifyToken } = require("../middleware/auth")
 
 
 const articlesRoutes = (app) => {
+  // protected endpoint
     app.get('/articles', verifyToken, getAllArticles)
-    app.get('/article/:id', findOne)
-    app.post('/article', createArticle)
-    app.delete('/article/:id', deleteArticle)
-    app.put('/article/:id', updateArticle)
+    app.get('/article/:id', verifyToken,findOne)
+    app.post('/article', verifyToken, createArticle)
+    app.delete('/article/:id', verifyToken, deleteArticle)
+    app.put('/article/:id', verifyToken, updateArticle)
 }
 module.exports = articlesRoutes

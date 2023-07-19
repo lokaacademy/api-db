@@ -25,13 +25,13 @@ const verifyToken = (req, res, next) => {
 
     jwt.verify(token, secretKey, (err, decoded) => {
         if (err) {
-            responseData = response(401, 'No token provide', [])
+            responseData = response(401, 'Token tidak sesuai', [])
             res.send(responseData)
             return 
           }
       
-          req[id] = decoded.id /* cara mengambil payload pada token */
-          req[id].email = decoded.email
+          req.id = decoded.id /* cara mengambil payload pada token */
+          req.email = decoded.email
           console.log(req.email)
           next();
     })
