@@ -26,6 +26,7 @@ users.signUp = (newUser, result) => {
 }
 
 users.login = (email, password, result) => {
+    // check data email valid / tidak
     mysqlConnection.query(`SELECT id, email, name, password FROM users WHERE email = ${mysqlConnection.escape(email)}`, (err, res) => {
         if(err){
             console.log('error', err)
