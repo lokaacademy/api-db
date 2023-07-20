@@ -19,8 +19,8 @@ loginUser = (req, res) => {
                 res.send(responseData)
             } else {
                 userData = data.user
-                responseData = response(200, data.msg, {token: data.token, user: { email: userData.email, name: userData.name }})
-                res.cookie('SESSION_ID', data.token, { httpOnly: true });
+                responseData = response(200, data.msg, {token: data.token, user: { email: userData.email, name: userData.name, membership: userData.membership }})
+                //res.cookie('SESSION_ID', data.token, { httpOnly: true });
                 res.send(responseData)
             }
         }
@@ -45,10 +45,12 @@ registerUser = (req, res) => {
        
         const email = req.body.email
         const name = req.body.name
+        const membership = req.body.membership || 'free'
         const newUser = {
             email: email,
             name: name,
-            password: await encryptPassword()
+            password: await encryptPassword(),
+            membership: membership
         }
         
         if(Object.keys(req.body).length === 0){

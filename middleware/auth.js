@@ -10,7 +10,16 @@ const generateToken = (payload) => {
 }
 
 const verifyToken = (req, res, next) => {
-    const token = req.cookies.SESSION_ID /* menggunakan cookies */
+    //const token = req.cookies.SESSION_ID /* menggunakan cookies */
+
+    if (!req.headers.authorization) {
+        responseData = response(401, 'No token provide', [])
+        res.send(responseData)
+        return
+      }
+  
+      const token = req.headers.authorization.split(' ')[1] || req.headers.authorization;
+      console.log('token ', token)
 
     /* const bearerHeaders = req.headers['authorization] menggunakan headers */
     
@@ -19,6 +28,15 @@ const verifyToken = (req, res, next) => {
         responseData = response(401, 'No token provide', [])
         res.send(responseData)
         return
+    }
+
+    // verifikasi membership
+    const checkMembership = (membership, mErr) => {
+        if(membership === 'free'){
+            mErr.status = 401
+            mErr.message = 'free member tidak bisa mengakses konten ini'
+            return mErr
+        }
     }
 
     // verify jwt token
@@ -30,11 +48,26 @@ const verifyToken = (req, res, next) => {
             return 
           }
       
-          req.id = decoded.id /* cara mengambil payload pada token */
-          req.email = decoded.email
-          console.log(req.email)
-          next();
+        req.id = decoded.id /* cara mengambil payload pada token */
+        req.email = decoded.email
+        req.membership = decoded.membership
+        console.log('membership', req.membership)
+
+        let membership = checkMembership(req.membership, mErr => {
+        membership = mErr
+        })
+
+        if(membership){
+            if(membership.status = 401){
+                responseData = response(membership.status, membership.message, [])
+                res.send(responseData)
+                return
+            }
+        }
+    
+        next();
     })
+
 }
 
 module.exports = {generateToken, verifyToken}

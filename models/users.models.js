@@ -11,6 +11,7 @@ const users = function (user) {
     this.email = user.email,
     this.password = user.password,
     this.name = user.name
+    this.membership = user.membership
 }
 
 users.signUp = (newUser, result) => {
@@ -27,7 +28,7 @@ users.signUp = (newUser, result) => {
 
 users.login = (email, password, result) => {
     // check data email valid / tidak
-    mysqlConnection.query(`SELECT id, email, name, password FROM users WHERE email = ${mysqlConnection.escape(email)}`, (err, res) => {
+    mysqlConnection.query(`SELECT id, email, name, password, membership FROM users WHERE email = ${mysqlConnection.escape(email)}`, (err, res) => {
         if(err){
             console.log('error', err)
             result(err, null)
@@ -51,7 +52,8 @@ users.login = (email, password, result) => {
             if (bRes) {
                 const payload = {
                     id: res[0].id,
-                    email: res[0].email
+                    email: res[0].email,
+                    membership: res[0].membership
                 }
                 const token = generateToken(payload)
                 mysqlConnection.query(`UPDATE users SET last_login = now() WHERE id = '${res[0].id}' `)
