@@ -12,6 +12,7 @@ const generateToken = (payload) => {
 const verifyToken = (req, res, next) => {
     //const token = req.cookies.SESSION_ID /* menggunakan cookies */
 
+    /* req.headers['authorization] menggunakan headers */
     if (!req.headers.authorization) {
         responseData = response(401, 'No token provide', [])
         res.send(responseData)
@@ -20,8 +21,6 @@ const verifyToken = (req, res, next) => {
   
       const token = req.headers.authorization.split(' ')[1] || req.headers.authorization;
       console.log('token ', token)
-
-    /* const bearerHeaders = req.headers['authorization] menggunakan headers */
     
     if(!token)
     {
