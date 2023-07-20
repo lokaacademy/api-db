@@ -63,7 +63,8 @@ dbConnection.connect((error) => {
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    last_login DATETIME
+    last_login DATETIME,
+    membership VARCHAR(255) NOT NULL
   )`
 
   dbConnection.query(createTableQuery, (error) => {
