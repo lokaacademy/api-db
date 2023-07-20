@@ -4,9 +4,10 @@ const { execSync } = require('child_process')
 // Step 1: Check .env file exists, if false create .env with MySQL config
 if (!fs.existsSync('.env')) {
   const envContent = `DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=password
-DB_DATABASE=mydatabase`
+    DB_USER=root
+    DB_PASSWORD=password
+    DB_DATABASE=mydatabase`
+  
   fs.writeFileSync('.env', envContent)
   console.log('.env file created with MySQL configuration.')
 } else {

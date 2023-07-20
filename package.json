@@ -21,7 +21,7 @@
     "express-validator": "^7.0.1",
     "inquirer": "^8.0.0",
     "jsonwebtoken": "^9.0.1",
-    "mysql2": "^3.5.1"
+    "mysql2": "^3.5.2"
   },
   "devDependencies": {
     "chai": "^4.3.7",
