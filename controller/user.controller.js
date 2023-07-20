@@ -25,8 +25,6 @@ loginUser = (req, res) => {
             }
         }
             
-
-            
     })
 }
 

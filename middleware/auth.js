@@ -17,10 +17,10 @@ const verifyToken = (req, res, next) => {
         responseData = response(401, 'No token provide', [])
         res.send(responseData)
         return
-      }
+    }
   
-      const token = req.headers.authorization.split(' ')[1] || req.headers.authorization;
-      console.log('token ', token)
+    const token = req.headers.authorization.split(' ')[1] || req.headers.authorization
+    console.log('token ', token)
     
     if(!token)
     {
