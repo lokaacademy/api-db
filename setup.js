@@ -108,9 +108,9 @@ dbConnection.connect((error) => {
         }
   
         dbConnection.end();
+        console.log('setup is done...')
       });
     });
   }
-
   
 })
