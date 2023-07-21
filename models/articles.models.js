@@ -12,7 +12,7 @@ const articles = function (article) {
 
 articles.getAllArticles = (result) => {
 
-    let query = "SELECT * from articles"
+    let query = `SELECT judul, penulis from articles WHERE delete_at IS NULL`
 
     mysqlConnection.query(query, (err, res) => {
 
@@ -52,7 +52,7 @@ articles.findById = (id, result) => {
 }
 
 articles.delete = (id, result) => {
-    mysqlConnection.query(`DELETE FROM articles WHERE id= ${id}`, (err, res) => {
+    mysqlConnection.query(`UPDATE articles SET delete_at = now() WHERE id= ${id}`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);

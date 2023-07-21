@@ -14,6 +14,8 @@ loginUser = (req, res) => {
         }
         else {
 
+            console.log(data)
+
             if (data.status === 401) {
                 responseData = response(401, 'password salah !', [])
                 res.send(responseData)
